@@ -1,24 +1,26 @@
-import argparse
-
-
 def llcli():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--append", type=str, default=None, help="append to end of linked list")
-    parser.add_argument("--llist", type=bool, default=False, help="list contest of linked list")
+    parser.add_argument("--append", nargs='+', help="append to end of linked list")
     parser.add_argument("--lprint", type=bool, default=False, help="print Linked List contents")
     args = parser.parse_args()
-    appendStr = args.append
-    listStr = args.llist
+    append = args.append
+    appList = []
+    for append in parser.parse_args()._get_kwargs():
+       appList.append(append) 
     printList = args.lprint
-    return appendStr, listStr, printList
+    return appList, printList
+
+def takeNodes(nodeList):
+    llist1 = LinkedList()
+    for node in nodeList:
+       llist1.listAppend(node)
+    return llist1
 
 def main():
-    appVal, listlist, lp= llcli()
-    llist1 = LinkedList()
-    if listlist is True:
-        llist1.listAppend(appVal)
+    appVals, lp= llcli()
+    nlist = takeNodes(appVals)
     if lp is True: 
-        llist1.printList()
+        nlist.printList()
 
 
 class Node:
@@ -51,6 +53,5 @@ class LinkedList:
             temp = temp.next
 
 
-
 if __name__ == '__main__':
-    main()        
+    main()
