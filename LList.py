@@ -1,3 +1,7 @@
+import argparse
+import sqlite3
+from sqlite3 import Error
+
 def llcli():
     parser = argparse.ArgumentParser()
     parser.add_argument("--append", nargs='+', help="append to end of linked list")
@@ -45,6 +49,15 @@ class LinkedList:
 
     def prepend(self, data):
         self.head = Node(data=data, next=self.head)
+
+    def createDb(db_name):
+        try:
+            conn = sqlite3.connect(db_name)
+            print(sqlite3.version)
+        except Error as e:
+            print(e)
+        finally:
+            conn.close()
 
     def printList(self): 
         temp = self.head 
